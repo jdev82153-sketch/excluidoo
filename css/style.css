@@ -1,1 +1,696 @@
+/* =====================================================
+   HUNTER-IA
+   LOGIN
+   ===================================================== */
 
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --background: #050608;
+    --background-secondary: #090b10;
+
+    --card: rgba(13, 16, 22, 0.88);
+    --card-border: rgba(255, 255, 255, 0.08);
+
+    --text: #ffffff;
+    --text-secondary: #9ca3af;
+    --text-muted: #626975;
+
+    --accent: #ffffff;
+    --accent-dark: #d9d9d9;
+
+    --success: #45e39b;
+    --error: #ff5c67;
+
+    --input: rgba(255, 255, 255, 0.045);
+    --input-border: rgba(255, 255, 255, 0.09);
+}
+
+
+/* =====================================================
+   BASE
+   ===================================================== */
+
+html {
+    min-height: 100%;
+}
+
+body {
+    min-height: 100vh;
+
+    font-family:
+        Inter,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Roboto,
+        Arial,
+        sans-serif;
+
+    background: var(--background);
+    color: var(--text);
+
+    overflow-x: hidden;
+}
+
+
+/* =====================================================
+   PÁGINA
+   ===================================================== */
+
+.login-page {
+    position: relative;
+
+    min-height: 100vh;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 40px 20px;
+
+    overflow: hidden;
+
+    background:
+        radial-gradient(
+            circle at 50% 0%,
+            rgba(255, 255, 255, 0.045),
+            transparent 40%
+        ),
+        var(--background);
+}
+
+
+/* =====================================================
+   GRID DE FUNDO
+   ===================================================== */
+
+.background-grid {
+    position: absolute;
+    inset: 0;
+
+    opacity: 0.3;
+
+    background-image:
+        linear-gradient(
+            rgba(255, 255, 255, 0.025) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            rgba(255, 255, 255, 0.025) 1px,
+            transparent 1px
+        );
+
+    background-size: 45px 45px;
+
+    mask-image:
+        linear-gradient(
+            to bottom,
+            black,
+            transparent 90%
+        );
+
+    pointer-events: none;
+}
+
+
+/* =====================================================
+   BRILHOS
+   ===================================================== */
+
+.glow {
+    position: absolute;
+
+    width: 420px;
+    height: 420px;
+
+    border-radius: 50%;
+
+    filter: blur(100px);
+
+    opacity: 0.07;
+
+    pointer-events: none;
+}
+
+.glow-1 {
+    top: -200px;
+    left: -150px;
+
+    background: white;
+}
+
+.glow-2 {
+    right: -180px;
+    bottom: -220px;
+
+    background: #ffffff;
+}
+
+
+/* =====================================================
+   CONTAINER
+   ===================================================== */
+
+.login-container {
+    position: relative;
+
+    width: 100%;
+    max-width: 430px;
+
+    z-index: 2;
+
+    animation: pageEnter 0.7s ease forwards;
+}
+
+
+/* =====================================================
+   MARCA
+   ===================================================== */
+
+.brand {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 13px;
+
+    margin-bottom: 30px;
+}
+
+.brand-icon {
+    width: 48px;
+    height: 48px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 13px;
+
+    background: #ffffff;
+    color: #050608;
+
+    font-size: 23px;
+    font-weight: 900;
+
+    box-shadow:
+        0 0 35px rgba(255, 255, 255, 0.12);
+}
+
+.brand-text h1 {
+    font-size: 24px;
+    font-weight: 900;
+
+    letter-spacing: 1.5px;
+}
+
+.brand-text h1 span {
+    color: #8c929c;
+}
+
+.brand-text p {
+    margin-top: 3px;
+
+    color: #666d78;
+
+    font-size: 8px;
+    font-weight: 700;
+
+    letter-spacing: 2.1px;
+}
+
+
+/* =====================================================
+   LOGIN CARD
+   ===================================================== */
+
+.login-card {
+    width: 100%;
+
+    padding: 34px;
+
+    border: 1px solid var(--card-border);
+
+    border-radius: 22px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255, 255, 255, 0.035),
+            rgba(255, 255, 255, 0.012)
+        ),
+        var(--card);
+
+    box-shadow:
+        0 25px 80px rgba(0, 0, 0, 0.45),
+        inset 0 1px 0 rgba(255, 255, 255, 0.035);
+
+    backdrop-filter: blur(18px);
+}
+
+
+/* =====================================================
+   CABEÇALHO
+   ===================================================== */
+
+.login-header {
+    margin-bottom: 28px;
+}
+
+.status-dot {
+    display: inline-block;
+
+    width: 7px;
+    height: 7px;
+
+    margin-right: 7px;
+
+    border-radius: 50%;
+
+    background: var(--success);
+
+    box-shadow:
+        0 0 10px rgba(69, 227, 155, 0.65);
+}
+
+.status-text {
+    color: #727985;
+
+    font-size: 10px;
+    font-weight: 800;
+
+    letter-spacing: 1.5px;
+}
+
+.login-header h2 {
+    margin-top: 17px;
+
+    font-size: 27px;
+    line-height: 1.2;
+
+    letter-spacing: -0.8px;
+}
+
+.login-header p {
+    margin-top: 8px;
+
+    color: var(--text-secondary);
+
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+
+/* =====================================================
+   FORMULÁRIO
+   ===================================================== */
+
+.input-group {
+    margin-bottom: 20px;
+}
+
+.input-group label,
+.password-label label {
+    display: block;
+
+    margin-bottom: 8px;
+
+    color: #d9dde4;
+
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.input-wrapper {
+    position: relative;
+}
+
+.input-wrapper input {
+    width: 100%;
+    height: 53px;
+
+    padding: 0 45px;
+
+    border: 1px solid var(--input-border);
+    border-radius: 12px;
+
+    outline: none;
+
+    background: var(--input);
+
+    color: white;
+
+    font-size: 14px;
+
+    transition:
+        border-color 0.2s ease,
+        background 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.input-wrapper input::placeholder {
+    color: #555c67;
+}
+
+.input-wrapper input:focus {
+    border-color: rgba(255, 255, 255, 0.28);
+
+    background: rgba(255, 255, 255, 0.065);
+
+    box-shadow:
+        0 0 0 3px rgba(255, 255, 255, 0.035);
+}
+
+.input-icon {
+    position: absolute;
+
+    left: 17px;
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    color: #6b727d;
+
+    font-size: 13px;
+
+    pointer-events: none;
+}
+
+
+/* =====================================================
+   SENHA
+   ===================================================== */
+
+.password-label {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.password-label label {
+    margin-bottom: 8px;
+}
+
+.forgot-button {
+    border: none;
+    background: transparent;
+
+    color: #898f99;
+
+    font-size: 11px;
+
+    cursor: pointer;
+
+    transition: color 0.2s ease;
+}
+
+.forgot-button:hover {
+    color: white;
+}
+
+.password-toggle {
+    position: absolute;
+
+    right: 13px;
+    top: 50%;
+
+    width: 32px;
+    height: 32px;
+
+    transform: translateY(-50%);
+
+    border: none;
+    border-radius: 8px;
+
+    background: transparent;
+
+    color: #727985;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        color 0.2s ease;
+}
+
+.password-toggle:hover {
+    background: rgba(255, 255, 255, 0.06);
+    color: white;
+}
+
+
+/* =====================================================
+   LEMBRAR ACESSO
+   ===================================================== */
+
+.remember {
+    display: flex;
+    align-items: center;
+
+    gap: 9px;
+
+    margin: 4px 0 23px;
+
+    color: #818792;
+
+    font-size: 12px;
+
+    cursor: pointer;
+}
+
+.remember input {
+    position: absolute;
+
+    opacity: 0;
+
+    pointer-events: none;
+}
+
+.custom-checkbox {
+    width: 16px;
+    height: 16px;
+
+    border: 1px solid #3d434c;
+    border-radius: 4px;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.remember input:checked + .custom-checkbox {
+    background: white;
+    border-color: white;
+
+    box-shadow:
+        inset 0 0 0 3px #090b10;
+}
+
+
+/* =====================================================
+   BOTÃO LOGIN
+   ===================================================== */
+
+.login-button {
+    width: 100%;
+    height: 54px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 15px;
+
+    border: none;
+    border-radius: 12px;
+
+    background: white;
+    color: #050608;
+
+    font-size: 12px;
+    font-weight: 900;
+
+    letter-spacing: 0.6px;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        background 0.2s ease;
+}
+
+.login-button:hover {
+    transform: translateY(-1px);
+
+    background: #eeeeee;
+
+    box-shadow:
+        0 12px 30px rgba(255, 255, 255, 0.08);
+}
+
+.login-button:active {
+    transform: translateY(0);
+}
+
+.button-arrow {
+    font-size: 19px;
+
+    transition: transform 0.2s ease;
+}
+
+.login-button:hover .button-arrow {
+    transform: translateX(4px);
+}
+
+.login-button.loading {
+    cursor: wait;
+
+    opacity: 0.7;
+}
+
+
+/* =====================================================
+   MENSAGEM
+   ===================================================== */
+
+.login-message {
+    min-height: 18px;
+
+    margin-top: 15px;
+
+    text-align: center;
+
+    font-size: 11px;
+
+    line-height: 1.5;
+}
+
+.login-message.error {
+    color: var(--error);
+}
+
+.login-message.info {
+    color: #8d949f;
+}
+
+
+/* =====================================================
+   RODAPÉ
+   ===================================================== */
+
+.login-footer {
+    margin-top: 23px;
+
+    text-align: center;
+
+    color: #555c66;
+}
+
+.login-footer p {
+    font-size: 10px;
+
+    line-height: 1.7;
+}
+
+.login-footer p span {
+    margin: 0 4px;
+
+    color: #3e444d;
+}
+
+.login-footer small {
+    display: block;
+
+    margin-top: 7px;
+
+    color: #3e444d;
+
+    font-size: 9px;
+}
+
+
+/* =====================================================
+   ANIMAÇÃO
+   ===================================================== */
+
+@keyframes pageEnter {
+
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+}
+
+
+/* =====================================================
+   RESPONSIVIDADE
+   ===================================================== */
+
+@media (max-width: 520px) {
+
+    .login-page {
+        padding: 25px 16px;
+    }
+
+    .login-card {
+        padding: 26px 20px;
+
+        border-radius: 19px;
+    }
+
+    .brand {
+        margin-bottom: 23px;
+    }
+
+    .brand-icon {
+        width: 43px;
+        height: 43px;
+
+        border-radius: 11px;
+
+        font-size: 20px;
+    }
+
+    .brand-text h1 {
+        font-size: 21px;
+    }
+
+    .login-header h2 {
+        font-size: 24px;
+    }
+
+    .login-header p {
+        font-size: 13px;
+    }
+
+}
+
+@media (max-width: 350px) {
+
+    .login-card {
+        padding: 23px 16px;
+    }
+
+    .password-label {
+        align-items: flex-start;
+        gap: 8px;
+    }
+
+    .forgot-button {
+        font-size: 10px;
+    }
+
+  }
