@@ -1,1 +1,367 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
 
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Gerador de Oferta | HUNTER-IA</title>
+
+<link rel="stylesheet" href="../css/style.css">
+
+<style>
+
+.offer-page {
+    max-width: 1050px;
+    margin: auto;
+}
+
+.offer-page h1 {
+    font-size: 30px;
+    margin-bottom: 8px;
+}
+
+.offer-page h1 span {
+    color: var(--primary-light);
+}
+
+.offer-grid {
+    display:grid;
+    grid-template-columns:350px 1fr;
+    gap:18px;
+}
+
+.offer-card {
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:18px;
+    padding:23px;
+}
+
+.offer-card h2 {
+    font-size:16px;
+    margin-bottom:18px;
+}
+
+.offer-field {
+    margin-bottom:15px;
+}
+
+.offer-field label {
+    display:block;
+    font-size:12px;
+    color:var(--text-secondary);
+    margin-bottom:7px;
+}
+
+.offer-field input,
+.offer-field textarea {
+    width:100%;
+    background:#090c13;
+    border:1px solid var(--border);
+    color:white;
+    border-radius:10px;
+    padding:12px;
+    outline:none;
+    font-family:inherit;
+}
+
+.offer-field input {
+    height:44px;
+}
+
+.offer-field textarea {
+    height:100px;
+    resize:vertical;
+}
+
+.offer-btn {
+    width:100%;
+    height:48px;
+    border:none;
+    border-radius:11px;
+    background:linear-gradient(135deg,var(--primary),var(--primary-dark));
+    color:white;
+    font-weight:800;
+    cursor:pointer;
+}
+
+.offer-output {
+    min-height:450px;
+}
+
+.offer-output pre {
+    white-space:pre-wrap;
+    color:var(--text-secondary);
+    font-family:inherit;
+    font-size:13px;
+    line-height:1.8;
+}
+
+@media(max-width:850px) {
+    .offer-grid {
+        grid-template-columns:1fr;
+    }
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="dashboard-page">
+
+<aside class="sidebar">
+
+<div class="sidebar-brand">
+<h1>HUNTER<span>-IA</span></h1>
+<p>SALES INTELLIGENCE</p>
+</div>
+
+<nav class="sidebar-menu">
+
+<a href="../dashboard.html">
+<span class="menu-icon">⌂</span>
+Dashboard
+</a>
+
+<a href="vendedor.html">
+<span class="menu-icon">🤖</span>
+Vendedor IA
+</a>
+
+<a href="precos.html">
+<span class="menu-icon">💰</span>
+Calculadora de Preço
+</a>
+
+<a href="ofertas.html" class="active">
+<span class="menu-icon">🎯</span>
+Gerador de Oferta
+</a>
+
+<a href="treinador.html">
+<span class="menu-icon">🏋️</span>
+Treinador de Vendas
+</a>
+
+</nav>
+
+<div class="sidebar-bottom">
+
+<div class="user-card">
+
+<div class="user-avatar" id="avatar">U</div>
+
+<div class="user-info">
+<strong id="username">Usuário</strong>
+<span>● Online</span>
+</div>
+
+</div>
+
+<button class="logout-button" onclick="logout()">
+Sair da conta
+</button>
+
+</div>
+
+</aside>
+
+
+<main class="dashboard-main">
+
+<div class="topbar">
+
+<button
+class="mobile-menu-button"
+onclick="document.querySelector('.sidebar').classList.toggle('open')">
+☰
+</button>
+
+<div></div>
+
+<div class="topbar-status">
+<span class="status-dot"></span>
+Sistema online
+</div>
+
+</div>
+
+
+<div class="offer-page">
+
+<a href="../dashboard.html"
+style="color:var(--text-muted);text-decoration:none;font-size:12px;">
+← Voltar para Dashboard
+</a>
+
+<h1 style="margin-top:18px;">
+Gerador de <span>Oferta</span> 🎯
+</h1>
+
+<p style="color:var(--text-secondary);font-size:13px;margin-bottom:25px;">
+Transforme o problema do cliente em uma oferta convincente.
+</p>
+
+
+<div class="offer-grid">
+
+
+<div class="offer-card">
+
+<h2>Dados do cliente</h2>
+
+<div class="offer-field">
+
+<label>Cliente / negócio</label>
+
+<input id="client"
+placeholder="Ex: Academia Movimento">
+
+</div>
+
+
+<div class="offer-field">
+
+<label>Serviço</label>
+
+<input id="service"
+placeholder="Ex: Landing Page">
+
+</div>
+
+
+<div class="offer-field">
+
+<label>Problema identificado</label>
+
+<textarea
+id="problem"
+placeholder="Ex: não possui site e perde oportunidades..."></textarea>
+
+</div>
+
+
+<div class="offer-field">
+
+<label>Preço</label>
+
+<input
+id="price"
+placeholder="Ex: R$ 297">
+
+</div>
+
+
+<button
+class="offer-btn"
+onclick="generateOffer()">
+
+✨ GERAR OFERTA
+
+</button>
+
+</div>
+
+
+<div class="offer-card offer-output">
+
+<h2>Oferta pronta</h2>
+
+<pre id="output">
+Preencha os dados ao lado para gerar sua oferta.
+</pre>
+
+</div>
+
+
+</div>
+
+</div>
+
+
+<footer class="dashboard-footer">
+HUNTER-IA • Sales Intelligence • 2026
+</footer>
+
+</main>
+
+</div>
+
+
+<script>
+
+const username =
+localStorage.getItem("hunter_username") || "Usuário";
+
+document.getElementById("username").textContent = username;
+
+document.getElementById("avatar").textContent =
+username.charAt(0).toUpperCase();
+
+
+function logout() {
+
+localStorage.removeItem("hunter_username");
+localStorage.removeItem("hunter_logged");
+
+window.location.href="../index.html";
+
+}
+
+
+function generateOffer() {
+
+const client =
+document.getElementById("client").value.trim();
+
+const service =
+document.getElementById("service").value.trim();
+
+const problem =
+document.getElementById("problem").value.trim();
+
+const price =
+document.getElementById("price").value.trim();
+
+
+if(!client || !service || !problem || !price) {
+
+alert("Preencha todos os campos.");
+
+return;
+
+}
+
+
+document.getElementById("output").textContent =
+
+`OFERTA ESPECIAL — ${client}
+
+Olá!
+
+Analisei um pouco o seu negócio e percebi uma oportunidade importante.
+
+Hoje, ${problem}
+
+Por isso, minha sugestão é criar um ${service} pensado especificamente para apresentar melhor sua empresa e transformar visitantes em potenciais clientes.
+
+O projeto inclui uma estrutura profissional, focada em apresentar seus serviços e facilitar o contato com novos clientes.
+
+INVESTIMENTO
+
+${price}
+
+Se fizer sentido para você, podemos marcar uma rápida conversa e eu te mostro como podemos colocar essa ideia em prática.
+
+Posso te apresentar a proposta?`;
+
+}
+
+</script>
+
+</body>
+</html>
