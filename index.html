@@ -1,1 +1,309 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <title>HUNTER-IA | Login</title>
+
+    <meta
+        name="description"
+        content="HUNTER-IA — sua central inteligente para vendas."
+    >
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <main class="login-page">
+
+        <!-- Fundo decorativo -->
+        <div class="background-grid"></div>
+        <div class="glow glow-1"></div>
+        <div class="glow glow-2"></div>
+
+        <section class="login-container">
+
+            <!-- Logo / Marca -->
+            <div class="brand">
+                <div class="brand-icon">
+                    H
+                </div>
+
+                <div class="brand-text">
+                    <h1>HUNTER<span>-IA</span></h1>
+                    <p>INTELLIGÊNCIA PARA VENDER</p>
+                </div>
+            </div>
+
+            <!-- Card de login -->
+            <div class="login-card">
+
+                <div class="login-header">
+                    <span class="status-dot"></span>
+
+                    <span class="status-text">
+                        SISTEMA ONLINE
+                    </span>
+
+                    <h2>Bem-vindo de volta</h2>
+
+                    <p>
+                        Entre na sua conta para acessar o HUNTER-IA.
+                    </p>
+                </div>
+
+                <form id="loginForm">
+
+                    <!-- Usuário -->
+                    <div class="input-group">
+
+                        <label for="username">
+                            Usuário
+                        </label>
+
+                        <div class="input-wrapper">
+
+                            <span class="input-icon">
+                                ◉
+                            </span>
+
+                            <input
+                                type="text"
+                                id="username"
+                                name="username"
+                                placeholder="Digite seu usuário"
+                                autocomplete="username"
+                                required
+                            >
+
+                        </div>
+
+                    </div>
+
+                    <!-- Senha -->
+                    <div class="input-group">
+
+                        <div class="password-label">
+
+                            <label for="password">
+                                Senha
+                            </label>
+
+                            <button
+                                type="button"
+                                id="forgotPassword"
+                                class="forgot-button"
+                            >
+                                Esqueci minha senha
+                            </button>
+
+                        </div>
+
+                        <div class="input-wrapper">
+
+                            <span class="input-icon">
+                                ◆
+                            </span>
+
+                            <input
+                                type="password"
+                                id="password"
+                                name="password"
+                                placeholder="Digite sua senha"
+                                autocomplete="current-password"
+                                required
+                            >
+
+                            <button
+                                type="button"
+                                id="togglePassword"
+                                class="password-toggle"
+                                aria-label="Mostrar senha"
+                            >
+                                ◉
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                    <!-- Lembrar -->
+                    <label class="remember">
+
+                        <input
+                            type="checkbox"
+                            id="remember"
+                        >
+
+                        <span class="custom-checkbox"></span>
+
+                        <span>
+                            Lembrar meu acesso
+                        </span>
+
+                    </label>
+
+                    <!-- Botão -->
+                    <button
+                        type="submit"
+                        class="login-button"
+                        id="loginButton"
+                    >
+
+                        <span class="button-text">
+                            ENTRAR NO HUNTER-IA
+                        </span>
+
+                        <span class="button-arrow">
+                            →
+                        </span>
+
+                    </button>
+
+                    <!-- Mensagem -->
+                    <div
+                        id="loginMessage"
+                        class="login-message"
+                        aria-live="polite"
+                    ></div>
+
+                </form>
+
+            </div>
+
+            <!-- Rodapé -->
+            <div class="login-footer">
+
+                <p>
+                    HUNTER-IA
+                    <span>•</span>
+                    Inteligência que transforma oportunidades em vendas.
+                </p>
+
+                <small>
+                    © 2026 HUNTER-IA. Todos os direitos reservados.
+                </small>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <script>
+
+        const passwordInput =
+            document.getElementById("password");
+
+        const togglePassword =
+            document.getElementById("togglePassword");
+
+        const loginForm =
+            document.getElementById("loginForm");
+
+        const loginButton =
+            document.getElementById("loginButton");
+
+        const loginMessage =
+            document.getElementById("loginMessage");
+
+        const forgotPassword =
+            document.getElementById("forgotPassword");
+
+
+        /* Mostrar / esconder senha */
+
+        togglePassword.addEventListener("click", () => {
+
+            const isPassword =
+                passwordInput.type === "password";
+
+            passwordInput.type =
+                isPassword ? "text" : "password";
+
+            togglePassword.textContent =
+                isPassword ? "○" : "◉";
+
+            togglePassword.setAttribute(
+                "aria-label",
+                isPassword
+                    ? "Esconder senha"
+                    : "Mostrar senha"
+            );
+
+        });
+
+
+        /* Login demonstrativo */
+
+        loginForm.addEventListener("submit", (event) => {
+
+            event.preventDefault();
+
+            const username =
+                document.getElementById("username").value.trim();
+
+            const password =
+                passwordInput.value.trim();
+
+            if (!username || !password) {
+
+                showMessage(
+                    "Preencha usuário e senha.",
+                    "error"
+                );
+
+                return;
+            }
+
+            loginButton.classList.add("loading");
+
+            loginButton.querySelector(".button-text").textContent =
+                "VERIFICANDO...";
+
+            setTimeout(() => {
+
+                loginButton.classList.remove("loading");
+
+                loginButton.querySelector(".button-text").textContent =
+                    "ENTRAR NO HUNTER-IA";
+
+                showMessage(
+                    "Login ainda não conectado ao banco de dados.",
+                    "info"
+                );
+
+            }, 900);
+
+        });
+
+
+        /* Recuperação de senha */
+
+        forgotPassword.addEventListener("click", () => {
+
+            showMessage(
+                "A recuperação de senha será ativada quando conectarmos o sistema de autenticação.",
+                "info"
+            );
+
+        });
+
+
+        /* Mensagem */
+
+        function showMessage(message, type) {
+
+            loginMessage.textContent = message;
+
+            loginMessage.className =
+                "login-message " + type;
+
+        }
+
+    </script>
+
+</body>
+                      </html>
