@@ -3,17 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Vendedor IA | HUNTER-IA</title>
-
     <link rel="stylesheet" href="../css/style.css">
 
     <style>
-        /* =========================================
-           VENDEDOR IA
-           ========================================= */
-
-        .seller-page {
+        .page-content {
             max-width: 1100px;
             margin: 0 auto;
         }
@@ -22,24 +16,20 @@
             margin-bottom: 28px;
         }
 
-        .page-heading .back {
-            display: inline-flex;
-            align-items: center;
-            gap: 7px;
+        .back-link {
+            display: inline-block;
             color: var(--text-muted);
             text-decoration: none;
             font-size: 12px;
             margin-bottom: 18px;
-            transition: 0.2s ease;
         }
 
-        .page-heading .back:hover {
+        .back-link:hover {
             color: white;
         }
 
         .page-heading h1 {
             font-size: 30px;
-            letter-spacing: -1px;
             margin-bottom: 8px;
         }
 
@@ -52,282 +42,153 @@
             font-size: 13px;
         }
 
-        .seller-layout {
+        .tool-layout {
             display: grid;
             grid-template-columns: 360px 1fr;
             gap: 18px;
-            align-items: start;
         }
 
-        .seller-panel {
+        .tool-panel,
+        .result-panel {
             background: var(--card);
             border: 1px solid var(--border);
             border-radius: 18px;
             padding: 22px;
         }
 
-        .panel-title {
-            display: flex;
-            align-items: center;
-            gap: 10px;
+        .tool-panel h2,
+        .result-panel h2 {
+            font-size: 16px;
+            margin-bottom: 7px;
+        }
+
+        .panel-description {
+            color: var(--text-muted);
+            font-size: 11px;
+            line-height: 1.6;
             margin-bottom: 20px;
         }
 
-        .panel-title-icon {
-            width: 38px;
-            height: 38px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 10px;
-            background: rgba(124, 92, 255, 0.12);
-            border: 1px solid rgba(124, 92, 255, 0.18);
+        .field {
+            margin-bottom: 16px;
         }
 
-        .panel-title h2 {
-            font-size: 15px;
-        }
-
-        .panel-title p {
-            color: var(--text-muted);
-            font-size: 10px;
-            margin-top: 3px;
-        }
-
-        .seller-form-group {
-            margin-bottom: 17px;
-        }
-
-        .seller-form-group label {
+        .field label {
             display: block;
             color: #c8cedb;
             font-size: 12px;
             font-weight: 700;
-            margin-bottom: 8px;
+            margin-bottom: 7px;
         }
 
-        .seller-form-group input,
-        .seller-form-group select,
-        .seller-form-group textarea {
+        .field input,
+        .field select,
+        .field textarea {
             width: 100%;
             border: 1px solid var(--border);
-            outline: none;
-            border-radius: 10px;
             background: #090c13;
             color: white;
+            outline: none;
+            border-radius: 10px;
+            padding: 12px;
             font-family: inherit;
             font-size: 12px;
-            transition: 0.2s ease;
         }
 
-        .seller-form-group input,
-        .seller-form-group select {
+        .field input,
+        .field select {
             height: 44px;
-            padding: 0 12px;
         }
 
-        .seller-form-group textarea {
-            min-height: 90px;
-            padding: 12px;
+        .field textarea {
+            height: 100px;
             resize: vertical;
         }
 
-        .seller-form-group input:focus,
-        .seller-form-group select:focus,
-        .seller-form-group textarea:focus {
+        .field input:focus,
+        .field select:focus,
+        .field textarea:focus {
             border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(124, 92, 255, 0.1);
         }
 
-        .seller-form-group select {
-            appearance: none;
-        }
-
-        .generate-button {
+        .generate-btn {
             width: 100%;
             height: 48px;
             border: none;
             border-radius: 11px;
-            background: linear-gradient(
-                135deg,
-                var(--primary),
-                var(--primary-dark)
-            );
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
             color: white;
             font-weight: 800;
-            font-size: 13px;
             cursor: pointer;
-            box-shadow: 0 10px 30px rgba(124, 92, 255, 0.2);
-            transition: 0.25s ease;
         }
 
-        .generate-button:hover {
+        .generate-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 15px 35px rgba(124, 92, 255, 0.3);
-        }
-
-        /* RESULTADO */
-
-        .result-panel {
-            min-height: 520px;
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 18px;
-            overflow: hidden;
-        }
-
-        .result-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 19px 22px;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .result-header h2 {
-            font-size: 15px;
-        }
-
-        .ai-status {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            color: var(--success);
-            font-size: 10px;
-        }
-
-        .ai-status .status-dot {
-            width: 6px;
-            height: 6px;
         }
 
         .empty-result {
-            min-height: 450px;
+            min-height: 420px;
             display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
             text-align: center;
-            padding: 30px;
+            flex-direction: column;
         }
 
         .empty-icon {
-            width: 70px;
-            height: 70px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 20px;
-            background: rgba(124, 92, 255, 0.1);
-            border: 1px solid rgba(124, 92, 255, 0.17);
-            font-size: 30px;
-            margin-bottom: 18px;
+            font-size: 45px;
+            margin-bottom: 15px;
         }
 
         .empty-result h3 {
-            font-size: 17px;
             margin-bottom: 8px;
         }
 
         .empty-result p {
-            max-width: 400px;
             color: var(--text-muted);
             font-size: 12px;
+            max-width: 380px;
             line-height: 1.7;
         }
 
-        /* RESULTADO GERADO */
-
-        .generated-result {
+        #result {
             display: none;
-            padding: 22px;
         }
 
-        .result-section {
+        .result-box {
             padding: 16px;
-            background: rgba(255,255,255,0.025);
+            background: rgba(255,255,255,.025);
             border: 1px solid var(--border);
             border-radius: 12px;
             margin-bottom: 12px;
         }
 
-        .result-section-title {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
+        .result-box h3 {
+            font-size: 12px;
             margin-bottom: 10px;
         }
 
-        .result-section-title strong {
-            font-size: 12px;
-        }
-
-        .copy-button {
-            border: 1px solid var(--border);
-            background: transparent;
-            color: var(--text-muted);
-            border-radius: 7px;
-            padding: 5px 8px;
-            font-size: 9px;
-            cursor: pointer;
-        }
-
-        .copy-button:hover {
-            color: white;
-            border-color: var(--primary);
-        }
-
-        .result-content {
+        .result-box p {
             color: var(--text-secondary);
             font-size: 12px;
             line-height: 1.7;
             white-space: pre-line;
         }
 
-        .objection-list {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
+        .copy-btn {
+            margin-top: 10px;
+            background: transparent;
+            color: var(--primary-light);
+            border: 1px solid var(--border);
+            border-radius: 7px;
+            padding: 6px 10px;
+            cursor: pointer;
+            font-size: 10px;
         }
 
-        .objection-item {
-            padding: 11px;
-            border-radius: 9px;
-            background: rgba(255,255,255,0.025);
-            color: var(--text-secondary);
-            font-size: 11px;
-        }
-
-        .objection-item strong {
-            display: block;
-            color: white;
-            margin-bottom: 4px;
-        }
-
-        @media (max-width: 850px) {
-
-            .seller-layout {
+        @media(max-width:850px) {
+            .tool-layout {
                 grid-template-columns: 1fr;
-            }
-
-            .result-panel {
-                min-height: 450px;
-            }
-
-            .empty-result {
-                min-height: 380px;
-            }
-        }
-
-        @media (max-width: 700px) {
-
-            .page-heading h1 {
-                font-size: 25px;
-            }
-
-            .seller-panel,
-            .result-panel {
-                border-radius: 14px;
             }
         }
     </style>
@@ -337,7 +198,6 @@
 
 <div class="dashboard-page">
 
-    <!-- SIDEBAR -->
     <aside class="sidebar">
 
         <div class="sidebar-brand">
@@ -377,10 +237,10 @@
         <div class="sidebar-bottom">
 
             <div class="user-card">
-                <div class="user-avatar" id="userAvatar">U</div>
+                <div class="user-avatar" id="avatar">U</div>
 
                 <div class="user-info">
-                    <strong id="sidebarUsername">Usuário</strong>
+                    <strong id="username">Usuário</strong>
                     <span>● Online</span>
                 </div>
             </div>
@@ -393,12 +253,14 @@
 
     </aside>
 
-    <!-- CONTEÚDO -->
+
     <main class="dashboard-main">
 
         <div class="topbar">
 
-            <button class="mobile-menu-button" onclick="toggleSidebar()">
+            <button
+                class="mobile-menu-button"
+                onclick="document.querySelector('.sidebar').classList.toggle('open')">
                 ☰
             </button>
 
@@ -411,271 +273,173 @@
 
         </div>
 
-        <div class="seller-page">
 
-            <!-- TÍTULO -->
+        <div class="page-content">
 
-            <section class="page-heading">
+            <div class="page-heading">
 
-                <a href="../dashboard.html" class="back">
-                    ← Voltar para o Dashboard
+                <a href="../dashboard.html" class="back-link">
+                    ← Voltar para Dashboard
                 </a>
 
                 <h1>
-                    Vendedor <span>IA</span>
+                    Vendedor <span>IA</span> 🤖
                 </h1>
 
                 <p>
-                    Crie abordagens, respostas e estratégias de fechamento usando inteligência artificial.
+                    Crie abordagens e estratégias para fechar mais vendas.
                 </p>
 
-            </section>
+            </div>
 
-            <!-- ÁREA PRINCIPAL -->
 
-            <section class="seller-layout">
+            <div class="tool-layout">
 
-                <!-- FORMULÁRIO -->
+                <div class="tool-panel">
 
-                <div class="seller-panel">
+                    <h2>Configure a venda</h2>
 
-                    <div class="panel-title">
+                    <p class="panel-description">
+                        Informe os dados do cliente para gerar uma estratégia.
+                    </p>
 
-                        <div class="panel-title-icon">
-                            🤖
-                        </div>
-
-                        <div>
-                            <h2>Configure sua venda</h2>
-                            <p>Conte para a IA sobre o cliente</p>
-                        </div>
-
-                    </div>
-
-                    <div class="seller-form-group">
-
+                    <div class="field">
                         <label>Tipo de cliente</label>
 
                         <input
-                            type="text"
                             id="clientType"
-                            placeholder="Ex: clínica, academia, restaurante..."
-                        >
-
+                            placeholder="Ex: academia, clínica, restaurante">
                     </div>
 
-                    <div class="seller-form-group">
 
-                        <label>Serviço que você vende</label>
+                    <div class="field">
+
+                        <label>Serviço</label>
 
                         <select id="service">
 
                             <option value="">
-                                Selecione um serviço
+                                Selecione
                             </option>
 
-                            <option value="Landing Page">
-                                Landing Page
-                            </option>
-
-                            <option value="Site profissional">
-                                Site profissional
-                            </option>
-
-                            <option value="Loja virtual">
-                                Loja virtual
-                            </option>
-
-                            <option value="Automação">
-                                Automação
-                            </option>
-
-                            <option value="Chatbot">
-                                Chatbot
-                            </option>
-
-                            <option value="Outro">
-                                Outro
-                            </option>
+                            <option>Landing Page</option>
+                            <option>Site profissional</option>
+                            <option>Loja virtual</option>
+                            <option>Automação</option>
+                            <option>Chatbot</option>
 
                         </select>
 
                     </div>
 
-                    <div class="seller-form-group">
 
-                        <label>Onde será a abordagem?</label>
+                    <div class="field">
+
+                        <label>Canal</label>
 
                         <select id="channel">
 
-                            <option value="WhatsApp">
-                                WhatsApp
-                            </option>
-
-                            <option value="Instagram">
-                                Instagram
-                            </option>
-
-                            <option value="Ligação">
-                                Ligação
-                            </option>
-
-                            <option value="Presencial">
-                                Presencial
-                            </option>
-
-                            <option value="E-mail">
-                                E-mail
-                            </option>
+                            <option>WhatsApp</option>
+                            <option>Instagram</option>
+                            <option>Ligação</option>
+                            <option>E-mail</option>
+                            <option>Presencial</option>
 
                         </select>
 
                     </div>
 
-                    <div class="seller-form-group">
+
+                    <div class="field">
 
                         <label>Informações sobre o cliente</label>
 
                         <textarea
                             id="clientInfo"
-                            placeholder="Ex: encontrei o Instagram dele, não possui site, parece ter bastante movimento..."
-                        ></textarea>
+                            placeholder="Ex: não possui site, tem Instagram, recebe muitos clientes..."></textarea>
 
                     </div>
 
+
                     <button
-                        class="generate-button"
-                        onclick="generateSalesStrategy()"
-                    >
-                        ✨ Gerar estratégia de venda
+                        class="generate-btn"
+                        onclick="generate()">
+
+                        ✨ GERAR ESTRATÉGIA
+
                     </button>
 
                 </div>
 
-                <!-- RESULTADO -->
 
                 <div class="result-panel">
 
-                    <div class="result-header">
+                    <h2>Estratégia de venda</h2>
 
-                        <h2>
-                            Estratégia gerada
-                        </h2>
-
-                        <div class="ai-status">
-
-                            <span class="status-dot"></span>
-
-                            IA pronta
-
-                        </div>
-
-                    </div>
-
-                    <!-- VAZIO -->
-
-                    <div class="empty-result" id="emptyResult">
+                    <div id="empty" class="empty-result">
 
                         <div class="empty-icon">
                             🤖
                         </div>
 
                         <h3>
-                            Sua estratégia aparecerá aqui
+                            Pronto para vender
                         </h3>
 
                         <p>
-                            Preencha as informações do cliente ao lado.
-                            A IA poderá criar sua primeira abordagem,
-                            respostas para objeções e uma estratégia
-                            de fechamento.
+                            Preencha os dados ao lado e gere
+                            uma estratégia personalizada.
                         </p>
 
                     </div>
 
-                    <!-- RESULTADO -->
 
-                    <div class="generated-result" id="generatedResult">
+                    <div id="result">
 
-                        <div class="result-section">
+                        <div class="result-box">
 
-                            <div class="result-section-title">
+                            <h3>💬 Primeira abordagem</h3>
 
-                                <strong>
-                                    💬 Primeira abordagem
-                                </strong>
+                            <p id="approach"></p>
 
-                                <button
-                                    class="copy-button"
-                                    onclick="copyText('approach')"
-                                >
-                                    Copiar
-                                </button>
-
-                            </div>
-
-                            <div
-                                class="result-content"
-                                id="approach"
-                            ></div>
+                            <button
+                                class="copy-btn"
+                                onclick="copy('approach')">
+                                Copiar
+                            </button>
 
                         </div>
 
-                        <div class="result-section">
 
-                            <div class="result-section-title">
+                        <div class="result-box">
 
-                                <strong>
-                                    🧠 Estratégia
-                                </strong>
+                            <h3>🧠 Estratégia</h3>
 
-                            </div>
-
-                            <div
-                                class="result-content"
-                                id="strategy"
-                            ></div>
+                            <p id="strategy"></p>
 
                         </div>
 
-                        <div class="result-section">
 
-                            <div class="result-section-title">
+                        <div class="result-box">
 
-                                <strong>
-                                    🛡️ Objeções
-                                </strong>
+                            <h3>🛡️ Como responder objeções</h3>
 
-                            </div>
-
-                            <div
-                                class="objection-list"
-                                id="objections"
-                            ></div>
+                            <p id="objections"></p>
 
                         </div>
 
-                        <div class="result-section">
 
-                            <div class="result-section-title">
+                        <div class="result-box">
 
-                                <strong>
-                                    🔥 Fechamento
-                                </strong>
+                            <h3>🔥 Fechamento</h3>
 
-                                <button
-                                    class="copy-button"
-                                    onclick="copyText('closing')"
-                                >
-                                    Copiar
-                                </button>
+                            <p id="closing"></p>
 
-                            </div>
-
-                            <div
-                                class="result-content"
-                                id="closing"
-                            ></div>
+                            <button
+                                class="copy-btn"
+                                onclick="copy('closing')">
+                                Copiar
+                            </button>
 
                         </div>
 
@@ -683,100 +447,125 @@
 
                 </div>
 
-            </section>
+            </div>
 
         </div>
 
+
         <footer class="dashboard-footer">
-            HUNTER-IA • Sales Intelligence
+            HUNTER-IA • Sales Intelligence • 2026
         </footer>
 
     </main>
 
 </div>
 
+
 <script>
 
-    /* =========================================
-       USUÁRIO
-       ========================================= */
+const username =
+    localStorage.getItem("hunter_username") || "Usuário";
 
-    const username =
-        localStorage.getItem("hunter_username") || "Usuário";
+document.getElementById("username").textContent = username;
 
-    document.getElementById("sidebarUsername").textContent =
-        username;
-
-    document.getElementById("userAvatar").textContent =
-        username.charAt(0).toUpperCase();
+document.getElementById("avatar").textContent =
+    username.charAt(0).toUpperCase();
 
 
-    /* =========================================
-       MENU MOBILE
-       ========================================= */
+function logout() {
 
-    function toggleSidebar() {
+    localStorage.removeItem("hunter_username");
+    localStorage.removeItem("hunter_logged");
 
-        document
-            .querySelector(".sidebar")
-            .classList.toggle("open");
+    window.location.href = "../index.html";
 
+}
+
+
+function generate() {
+
+    const client =
+        document.getElementById("clientType").value.trim();
+
+    const service =
+        document.getElementById("service").value;
+
+    const channel =
+        document.getElementById("channel").value;
+
+    const info =
+        document.getElementById("clientInfo").value.trim();
+
+
+    if (!client || !service) {
+
+        alert("Preencha o tipo de cliente e o serviço.");
+
+        return;
     }
 
 
-    /* =========================================
-       LOGOUT
-       ========================================= */
-
-    function logout() {
-
-        localStorage.removeItem("hunter_username");
-
-        window.location.href = "../index.html";
-
-    }
-
-
-    /* =========================================
-       GERAR ESTRATÉGIA
-       ========================================= */
-
-    function generateSalesStrategy() {
-
-        const clientType =
-            document.getElementById("clientType").value.trim();
-
-        const service =
-            document.getElementById("service").value;
-
-        const channel =
-            document.getElementById("channel").value;
-
-        const clientInfo =
-            document.getElementById("clientInfo").value.trim();
-
-
-        if (!clientType || !service) {
-
-            alert(
-                "Preencha pelo menos o tipo de cliente e o serviço."
-            );
-
-            return;
-        }
-
-
-        /*
-         * DEMONSTRAÇÃO TEMPORÁRIA
-         *
-         * Depois vamos substituir essa parte
-         * pela API de inteligência artificial.
-         */
-
-        const approach =
-
+    document.getElementById("approach").textContent =
 `Olá! Tudo bem?
 
-Estive conhecendo um pouco mais sobre o seu negócio e percebi algumas oportunidades que podem ajudar a empresa a conseguir mais clientes.
+Estive conhecendo um pouco sobre o seu negócio e percebi uma oportunidade que pode ajudar vocês a conseguir mais clientes.
 
-Eu trabalho com ${service} e acredito que podemos criar algo b
+Eu trabalho com ${service} e acredito que podemos criar algo interessante para a sua empresa.
+
+Posso te mostrar uma ideia rápida?`;
+
+
+    document.getElementById("strategy").textContent =
+`Aborde pelo ${channel} de maneira curta e profissional.
+
+Primeiro desperte curiosidade. Não tente vender tudo na primeira mensagem.
+
+Depois mostre o problema que você identificou e apresente o ${service} como solução.
+
+Informações do cliente:
+${info || "Nenhuma informação adicional."}`;
+
+
+    document.getElementById("objections").textContent =
+`“Está caro.”
+→ Entendo. Podemos começar com uma solução mais simples e focada no que realmente pode trazer retorno.
+
+“Vou pensar.”
+→ Claro. Qual ponto você gostaria de avaliar melhor? Posso esclarecer para você.
+
+“Agora não é o momento.”
+→ Sem problema. Podemos deixar uma ideia preparada e conversar novamente quando for melhor.`;
+
+
+    document.getElementById("closing").textContent =
+`Perfeito. Posso preparar uma ideia inicial para você visualizar como ficaria.
+
+Se fizer sentido para o seu negócio, ajustamos os detalhes juntos.
+
+Podemos marcar uma rápida conversa?`;
+
+
+    document.getElementById("empty").style.display =
+        "none";
+
+    document.getElementById("result").style.display =
+        "block";
+
+}
+
+
+function copy(id) {
+
+    const text =
+        document.getElementById(id).textContent;
+
+    navigator.clipboard.writeText(text);
+
+    alert("Copiado!");
+
+}
+
+</script>
+
+</body>
+</html>
